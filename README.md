@@ -4,7 +4,11 @@ test grpc pool and streams pool
 
 #### 1
 
-pool: size = 200    ttl = 1*time.Minute       g: concurrency =1000
+pool: size = 200    
+
+ttl = 1*time.Minute       
+
+concurrency =1000
 
 grpc pool result:
 
@@ -47,7 +51,13 @@ tcp connections: 200
 finish, use time: 469 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 10    g: concurrency =1000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 10    
+
+concurrency =1000
 
 streams pool result:
 
@@ -61,7 +71,13 @@ tcp connections: 141
 finish, use time: 150 ms 
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 1    g: concurrency =1000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 1   
+
+concurrency =1000
 
 streams pool result:
 
@@ -114,7 +130,11 @@ finish, use time: 465 ms
 
 #### 2
 
-pool: size = 200    ttl = 1*time.Minute       g: concurrency =2000
+pool: size = 200    
+
+ttl = 1*time.Minute      
+
+concurrency =2000
 
 grpc pool result:
 
@@ -162,7 +182,13 @@ tcp connections: 200
 finish, use time: 552 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 10    g: concurrency =2000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 10    
+
+concurrency =2000
 
 streams pool result:
 
@@ -175,7 +201,13 @@ tcp connections: 200
 finish, use time: 202 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 1    g: concurrency =2000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 1   
+
+concurrency =2000
 
 streams pool result:
 
@@ -206,7 +238,11 @@ finish, use time: 415 ms
 
 #### 3
 
-pool: size = 200    ttl = 1*time.Minute       g: concurrency =4000
+pool: size = 200    
+
+ttl = 1*time.Minute      
+
+concurrency =4000
 
 grpc pool result:
 
@@ -314,7 +350,13 @@ tcp connections: 200
 finish, use time: 1294 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 10    g: concurrency =4000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 10   
+
+concurrency =4000
 
 streams pool result:
 
@@ -339,7 +381,13 @@ tcp connections: 200
 finish, use time: 466 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 1    g: concurrency =4000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 1  
+
+concurrency =4000
 
 streams pool result:
 
@@ -454,7 +502,13 @@ finish, use time: 1210 ms
 
 #### more about streams pool
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 20    g: concurrency =4000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 20  
+
+concurrency =4000
 
 streams pool result:
 
@@ -497,7 +551,13 @@ tcp connections: 200
 finish, use time: 479 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 40    g: concurrency =4000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 40 
+
+concurrency =4000
 
 streams pool result:
 
@@ -513,7 +573,13 @@ tcp connections: 139
 finish, use time: 140 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 80    g: concurrency =4000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 80 
+
+concurrency =4000
 
 streams pool result:
 
@@ -531,7 +597,13 @@ tcp connections: 99
 finish, use time: 140 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 400    g: concurrency =4000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 400 
+
+concurrency =4000
 
 streams pool result:
 
@@ -544,7 +616,13 @@ tcp connections: 19
 finish, use time: 73 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 10000    g: concurrency =4000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 10000  
+
+concurrency =4000
 
 streams pool result:
 
@@ -560,7 +638,13 @@ finish, use time: 74 ms
 
 #### concurrency = 10000
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 50    g: concurrency =10000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 50   
+
+concurrency =10000
 
 streams pool result:
 
@@ -578,7 +662,13 @@ tcp connections: 187
 finish, use time: 259 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 1000    g: concurrency =10000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 1000 
+
+concurrency =10000
 
 streams pool result:
 
@@ -597,7 +687,13 @@ tcp connections: 22
 finish, use time: 200 ms
 ```
 
-pool: size = 200    ttl = 1*time.Minute   maxStreams = 10000    g: concurrency =10000
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 10000  
+
+concurrency =10000
 
 streams pool result:
 
