@@ -37,8 +37,8 @@ func main() {
 
 	// zero pool
 	begin := time.Now().UnixNano() / 1e6
-	p := newPool(200, 1*time.Minute, 20, 10000)
-	for i := 0; i < 10000; i++ {
+	p := newPool(200, 1*time.Minute, 10, 10000)
+	for i := 0; i < 4000; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
@@ -209,11 +209,16 @@ func (p *pool) release(addr string, conn *poolConn, err error) {
 		conn.in = true
 		addConnAfter(conn, sp.head)
 	}
+	if !conn.in {
+		p.Unlock()
+		conn.ClientConn.Close()
+		return
+	}
 	// it has errored or
 	// too many idle conn or
 	// too many conn
 	// conn is too old
-	if !conn.in || err != nil || sp.idle > p.maxIdle || sp.count > p.size || now-created > p.ttl {
+	if  err != nil || sp.idle > p.maxIdle || sp.count > p.size || now-created > p.ttl {
 		removeConn(conn)
 		p.Unlock()
 		conn.ClientConn.Close()
@@ -229,12 +234,14 @@ func (conn *poolConn)Close()  {
 }
 
 func removeConn(conn *poolConn)  {
-	if conn.next == nil || conn.pre == nil{
-		conn.pre = nil
-		return
+	if conn.pre != nil {
+		conn.pre.next = conn.next
 	}
-	conn.pre.next = conn.next
-	conn.next.pre = conn.pre
+	if conn.next != nil {
+		conn.next.pre = conn.pre
+	}
+	conn.pre = nil
+	conn.next = nil
 	conn.sp.count--
 	return
 }
