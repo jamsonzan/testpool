@@ -97,6 +97,7 @@ func main() {
 type pool struct {
 	size int
 	ttl  int64
+	
 	//  max streams on a *poolConn
 	maxStreams int
 	//  max idle conns
@@ -109,6 +110,8 @@ type pool struct {
 type streamsPool struct {
 	//  head of list
 	head   *poolConn
+	//  busy conns list
+	busy   *poolConn
 	//  the siza of list
 	count  int
 	//  idle conn
@@ -133,11 +136,11 @@ type poolConn struct {
 	in      bool
 }
 
-func newPool(size int, ttl time.Duration, ms int, idle int) *pool {
+func newPool(size int, ttl time.Duration, idle int, ms int) *pool {
 	if ms <= 0 {
 		ms = 1
 	}
-	if idle <= 0 {
+	if idle < 0 {
 		idle = 0
 	}
 	return &pool{
@@ -154,40 +157,53 @@ func (p *pool) getConn(addr string, opts ...grpc.DialOption) (*poolConn, error) 
 	p.Lock()
 	sp, ok := p.conns[addr]
 	if !ok {
-		sp = &streamsPool{head:&poolConn{}, count:0, idle:0}
+		sp = &streamsPool{head:&poolConn{}, busy:&poolConn{}, count:0, idle:0}
 		p.conns[addr] = sp
 	}
-	// while we have conns check streams and then return one
-	// otherwise we'll create a new conn
+	//  while we have conns check streams and then return one
+	//  otherwise we'll create a new conn
 	conn := sp.head.next
 	for conn != nil {
-		// too many streams or too old
-		if conn.streams >= p.maxStreams || now-conn.created > p.ttl {
-			conn = conn.next
+		//  a old conn
+		if now-conn.created > p.ttl {
+			next := conn.next
+			if conn.streams == 0 {
+				removeConn(conn)
+				conn.ClientConn.Close()
+				sp.idle--
+			}
+			conn = next
 			continue
 		}
-		// a idle conn
+		//  a busy conn
+		if conn.streams >= p.maxStreams {
+				next := conn.next
+				removeConn(conn)
+				addConnAfter(conn, sp.busy)
+				conn = next
+	           	continue
+		}
+		//  a idle conn
 		if conn.streams == 0 {
 			sp.idle--
 		}
-		// we got a good conn, lets unlock and return it
+		//  a good conn
 		conn.streams++
 		p.Unlock()
 		return conn, nil
 	}
 	p.Unlock()
 
-	// create new conn
+	//  create new conn
 	cc, err := grpc.Dial(addr, opts...)
 	if err != nil {
 		return nil, err
 	}
 	conn = &poolConn{cc,nil,addr,p,sp,1,time.Now().Unix(), nil, nil, false}
 
-	// add conn to streams pool
+	//  add conn to streams pool
 	p.Lock()
 	if sp.count < p.size {
-		conn.in = true
 		addConnAfter(conn, sp.head)
 	}
 	p.Unlock()
@@ -197,16 +213,9 @@ func (p *pool) getConn(addr string, opts ...grpc.DialOption) (*poolConn, error) 
 
 func (p *pool) release(addr string, conn *poolConn, err error) {
 	p.Lock()
-	conn.streams--
-	if conn.streams > 0 {
-		p.Unlock()
-		return
-	}
-	now := time.Now().Unix()
 	p, sp, created := conn.pool, conn.sp, conn.created
-	//  add conn to streams pool
+	//  try to add conn
 	if !conn.in && sp.count < p.size {
-		conn.in = true
 		addConnAfter(conn, sp.head)
 	}
 	if !conn.in {
@@ -214,17 +223,26 @@ func (p *pool) release(addr string, conn *poolConn, err error) {
 		conn.ClientConn.Close()
 		return
 	}
-	// it has errored or
-	// too many idle conn or
-	// too many conn
-	// conn is too old
-	if  err != nil || sp.idle > p.maxIdle || sp.count > p.size || now-created > p.ttl {
+	//  a busy conn
+	if conn.streams >= p.maxStreams {
 		removeConn(conn)
-		p.Unlock()
-		conn.ClientConn.Close()
-		return
+		addConnAfter(conn, sp.head)
 	}
-	sp.idle++
+	conn.streams--
+	//  if streams == 0, we can do something
+	if conn.streams == 0 {
+		//  1. it has errored
+		//  2. too many idle conn or
+		//  3. conn is too old
+		now := time.Now().Unix()
+		if  err != nil || sp.idle >= p.maxIdle || now-created > p.ttl {
+			removeConn(conn)
+			p.Unlock()
+			conn.ClientConn.Close()
+			return
+		}
+		sp.idle++
+	}
 	p.Unlock()
 	return
 }
@@ -242,6 +260,7 @@ func removeConn(conn *poolConn)  {
 	}
 	conn.pre = nil
 	conn.next = nil
+	conn.in = false
 	conn.sp.count--
 	return
 }
@@ -253,6 +272,7 @@ func addConnAfter(conn *poolConn, after *poolConn)  {
 		after.next.pre = conn
 	}
 	after.next = conn
+	conn.in = true
 	conn.sp.count++
 	return
 }
