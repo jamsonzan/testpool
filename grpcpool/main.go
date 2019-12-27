@@ -38,7 +38,7 @@ func main() {
 	// zero pool
 	begin := time.Now().UnixNano() / 1e6
 	p := newPool(200, 1*time.Minute)
-	for i := 0; i < 4000; i++ {
+	for i := 0; i < 400; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()

@@ -38,8 +38,8 @@ func main() {
 	wg := &sync.WaitGroup{}
 	// zero pool
 	begin := time.Now().UnixNano() / 1e6
-	p := newPool(200, 1*time.Minute, 10000, 10000)
-	for i := 0; i < 10000; i++ {
+	p := newPool(200, 1*time.Minute, 10000, 1)
+	for i := 0; i < 400; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()

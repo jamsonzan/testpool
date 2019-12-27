@@ -4,7 +4,186 @@ test grpc pool and streams pool
 
 totalConnection means total dial connection
 
+#### 0
+
+pool: size = 200    
+
+ttl = 1*time.Minute       
+
+concurrency =200
+
+grpc pool result:
+
+```go
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 23 
+tcp connections: 23 
+tcp connections: 167 
+finish, use time: 69 ms, totalConnection: 167
+```
+
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 10    
+
+concurrency =200
+
+streams pool result:
+
+```go
+tcp connections: 33 
+tcp connections: 39 
+finish, use time: 40 ms, totalConnection: 39
+```
+
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 1
+
+concurrency =200
+
+streams pool result:
+
+```go
+tcp connections: 71 
+tcp connections: 106 
+tcp connections: 117 
+tcp connections: 158 
+tcp connections: 172 
+finish, use time: 119 ms, totalConnection: 172
+```
+
 #### 1
+
+pool: size = 200    
+
+ttl = 1*time.Minute       
+
+concurrency =300
+
+grpc pool result:
+
+```go
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 49 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+finish, use time: 102 ms, totalConnection: 257
+```
+
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 10    
+
+concurrency =300
+
+streams pool result:
+
+```go
+tcp connections: 35 
+tcp connections: 35 
+tcp connections: 35 
+finish, use time: 24 ms, totalConnection: 35
+```
+
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 1
+
+concurrency =300
+
+streams pool result:
+
+```go
+tcp connections: 127 
+tcp connections: 132 
+tcp connections: 195 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+finish, use time: 119 ms, totalConnection: 293
+```
+
+#### 2
+
+pool: size = 200    
+
+ttl = 1*time.Minute       
+
+concurrency =400
+
+grpc pool result:
+
+```go
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 87 
+tcp connections: 200 
+tcp connections: 200 
+finish, use time: 126 ms, totalConnection: 400
+```
+
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 10    
+
+concurrency =400
+
+streams pool result:
+
+```go
+tcp connections: 35 
+tcp connections: 45 
+tcp connections: 45 
+finish, use time: 24 ms, totalConnection: 45
+```
+
+pool: size = 200    
+
+ttl = 1*time.Minute   
+
+maxStreams = 1    
+
+concurrency =400
+
+streams pool result:
+
+```go
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+finish, use time: 136 ms, totalConnection: 400
+```
+
+
+
+#### 3
 
 pool: size = 200    
 
@@ -126,7 +305,7 @@ finish, use time: 478 ms, totalConnection: 1000
 
 
 
-#### 2
+#### 4
 
 pool: size = 200    
 
@@ -258,7 +437,7 @@ finish, use time: 550 ms, totalConnection: 1997
 
 
 
-#### 3
+#### 5
 
 pool: size = 200    
 
