@@ -2,6 +2,8 @@
 
 test grpc pool and streams pool
 
+totalConnection means total dial connection
+
 #### 1
 
 pool: size = 200    
@@ -47,8 +49,7 @@ tcp connections: 200
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
-tcp connections: 200 
-finish, use time: 469 ms
+finish, use time: 486 ms, totalConnection: 999
 ```
 
 pool: size = 200    
@@ -63,12 +64,12 @@ streams pool result:
 
 ```go
 tcp connections: 91 
-tcp connections: 102 
-tcp connections: 131 
-tcp connections: 134 
-tcp connections: 141 
-tcp connections: 141 
-finish, use time: 150 ms 
+tcp connections: 117 
+tcp connections: 129 
+tcp connections: 129 
+tcp connections: 154 
+tcp connections: 154 
+finish, use time: 135 ms, totalConnection: 154
 ```
 
 pool: size = 200    
@@ -82,8 +83,6 @@ concurrency =1000
 streams pool result:
 
 ```go
-tcp connections: 167 
-tcp connections: 184 
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
@@ -122,8 +121,7 @@ tcp connections: 200
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
-tcp connections: 200 
-finish, use time: 465 ms
+finish, use time: 478 ms, totalConnection: 1000
 ```
 
 
@@ -141,15 +139,13 @@ grpc pool result:
 ```go
 tcp connections: 0 
 tcp connections: 0 
-tcp connections: 5 
-tcp connections: 5 
-tcp connections: 5 
-tcp connections: 5 
-tcp connections: 10 
-tcp connections: 11 
-tcp connections: 31 
-tcp connections: 52 
-tcp connections: 104 
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 0 
+tcp connections: 57 
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
@@ -178,8 +174,7 @@ tcp connections: 200
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
-tcp connections: 200 
-finish, use time: 552 ms
+finish, use time: 577 ms, totalConnection: 2000
 ```
 
 pool: size = 200    
@@ -193,12 +188,19 @@ concurrency =2000
 streams pool result:
 
 ```go
-tcp connections: 151 
+tcp connections: 187 
+tcp connections: 189 
+tcp connections: 189 
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
-finish, use time: 202 ms
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+finish, use time: 162 ms, totalConnection: 316
 ```
 
 pool: size = 200    
@@ -231,7 +233,27 @@ tcp connections: 200
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
-finish, use time: 415 ms
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+finish, use time: 550 ms, totalConnection: 1997
 ```
 
 
@@ -249,22 +271,20 @@ grpc pool result:
 ```go
 tcp connections: 0 
 tcp connections: 0 
-tcp connections: 1 
-tcp connections: 1 
-tcp connections: 1 
-tcp connections: 1 
+tcp connections: 0 
 tcp connections: 1 
 tcp connections: 1 
 tcp connections: 1 
 tcp connections: 1 
 tcp connections: 0 
-tcp connections: 1 
-tcp connections: 24 
+tcp connections: 0 
+tcp connections: 27 
 tcp connections: 67 
+tcp connections: 68 
 tcp connections: 75 
-tcp connections: 104 
-tcp connections: 104 
-tcp connections: 193 
+tcp connections: 76 
+tcp connections: 78 
+tcp connections: 108 
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
@@ -347,7 +367,20 @@ tcp connections: 200
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
-finish, use time: 1294 ms
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+finish, use time: 1271 ms, totalConnection: 3994
 ```
 
 pool: size = 200    
@@ -378,7 +411,32 @@ tcp connections: 200
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
-finish, use time: 466 ms
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+finish, use time: 589 ms, totalConnection: 2200
 ```
 
 pool: size = 200    
@@ -494,8 +552,7 @@ tcp connections: 200
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
-tcp connections: 200 
-finish, use time: 1210 ms
+finish, use time: 1305 ms, totalConnection: 3999
 ```
 
 
@@ -513,8 +570,7 @@ concurrency =4000
 streams pool result:
 
 ```go
-tcp connections: 179 
-tcp connections: 179 
+tcp connections: 196 
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
@@ -529,26 +585,7 @@ tcp connections: 200
 tcp connections: 200 
 tcp connections: 200 
 tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-tcp connections: 200 
-finish, use time: 479 ms
+finish, use time: 202 ms, totalConnection: 307
 ```
 
 pool: size = 200    
@@ -562,15 +599,18 @@ concurrency =4000
 streams pool result:
 
 ```go
-tcp connections: 111 
-tcp connections: 120 
-tcp connections: 136 
-tcp connections: 136 
-tcp connections: 139 
-tcp connections: 139 
-tcp connections: 139 
-tcp connections: 139 
-finish, use time: 140 ms
+tcp connections: 100 
+tcp connections: 116 
+tcp connections: 129 
+tcp connections: 145 
+tcp connections: 173 
+tcp connections: 174 
+tcp connections: 174 
+tcp connections: 174 
+tcp connections: 174 
+tcp connections: 174 
+tcp connections: 174 
+finish, use time: 142 ms, totalConnection: 174
 ```
 
 pool: size = 200    
@@ -584,17 +624,16 @@ concurrency =4000
 streams pool result:
 
 ```go
-tcp connections: 56 
-tcp connections: 69 
-tcp connections: 79 
-tcp connections: 79 
-tcp connections: 79 
-tcp connections: 99 
-tcp connections: 99 
-tcp connections: 99 
-tcp connections: 99 
-tcp connections: 99 
-finish, use time: 140 ms
+tcp connections: 66 
+tcp connections: 80 
+tcp connections: 84 
+tcp connections: 84 
+tcp connections: 84 
+tcp connections: 84 
+tcp connections: 84 
+tcp connections: 84 
+tcp connections: 84 
+finish, use time: 133 ms, totalConnection: 84
 ```
 
 pool: size = 200    
@@ -608,12 +647,16 @@ concurrency =4000
 streams pool result:
 
 ```go
-tcp connections: 19 
-tcp connections: 19 
-tcp connections: 19 
-tcp connections: 19 
-tcp connections: 19 
-finish, use time: 73 ms
+tcp connections: 10 
+tcp connections: 21 
+tcp connections: 26 
+tcp connections: 26 
+tcp connections: 26 
+tcp connections: 26 
+tcp connections: 26 
+tcp connections: 26 
+tcp connections: 26 
+finish, use time: 97 ms, totalConnection: 26
 ```
 
 pool: size = 200    
@@ -627,11 +670,17 @@ concurrency =4000
 streams pool result:
 
 ```go
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-finish, use time: 74 ms
+tcp connections: 5 
+tcp connections: 5 
+tcp connections: 5 
+tcp connections: 5 
+tcp connections: 5 
+tcp connections: 5 
+tcp connections: 5 
+tcp connections: 5 
+tcp connections: 5 
+tcp connections: 5 
+finish, use time: 99 ms, totalConnection: 5
 ```
 
 
@@ -649,17 +698,19 @@ concurrency =10000
 streams pool result:
 
 ```go
-tcp connections: 185 
-tcp connections: 187 
-tcp connections: 187 
-tcp connections: 187 
-tcp connections: 187 
-tcp connections: 187 
-tcp connections: 187 
-tcp connections: 187 
-tcp connections: 187 
-tcp connections: 187 
-finish, use time: 259 ms
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+tcp connections: 200 
+finish, use time: 293 ms, totalConnection: 291
 ```
 
 pool: size = 200    
@@ -673,18 +724,19 @@ concurrency =10000
 streams pool result:
 
 ```go
-tcp connections: 15 
-tcp connections: 15 
-tcp connections: 22 
-tcp connections: 22 
-tcp connections: 22 
-tcp connections: 22 
-tcp connections: 22 
-tcp connections: 22 
-tcp connections: 22 
-tcp connections: 22 
-tcp connections: 22 
-finish, use time: 200 ms
+tcp connections: 43 
+tcp connections: 45 
+tcp connections: 66 
+tcp connections: 85 
+tcp connections: 85 
+tcp connections: 85 
+tcp connections: 85 
+tcp connections: 85 
+tcp connections: 85 
+tcp connections: 85 
+tcp connections: 85 
+tcp connections: 85 
+finish, use time: 266 ms, totalConnection: 85
 ```
 
 pool: size = 200    
@@ -698,20 +750,26 @@ concurrency =10000
 streams pool result:
 
 ```go
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-tcp connections: 13 
-finish, use time: 204 ms
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+tcp connections: 9 
+finish, use time: 249 ms, totalConnection: 9
 ```
 

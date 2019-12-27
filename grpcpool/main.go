@@ -9,13 +9,15 @@ import (
 
 	"google.golang.org/grpc"
 	pgrpc "google.golang.org/grpc"
-	pb "learnGrpc/testpool/helloworld"
+	pb "testpool/helloworld"
 )
 type Greeter struct {}
 
 func (g *Greeter)SayHello(ctx context.Context, request *pb.HelloRequest) (*pb.HelloReply, error)  {
 	return &pb.HelloReply{Message: "Hello!" + request.Name}, nil
 }
+
+var totalConnection int
 
 func main() {
 	// setup server
@@ -33,7 +35,6 @@ func main() {
 	defer s.Stop()
 
 	wg := &sync.WaitGroup{}
-
 	// zero pool
 	begin := time.Now().UnixNano() / 1e6
 	p := newPool(200, 1*time.Minute)
@@ -81,7 +82,7 @@ func main() {
 			fmt.Printf("tcp connections: %d \n", len(p.conns[l.Addr().String()]))
 			p.Unlock()
 			end := time.Now().UnixNano() / 1e6
-			fmt.Printf("finish, use time: %d ms\n", end-begin)
+			fmt.Printf("finish, use time: %d ms, totalConnection: %d\n", end-begin, totalConnection)
 			return
 		case <-ticker.C:
 			p.Lock()
@@ -137,7 +138,7 @@ func (p *pool) getConn(addr string, opts ...grpc.DialOption) (*poolConn, error) 
 
 		return conn, nil
 	}
-
+	totalConnection++
 	p.Unlock()
 
 	// create new conn
